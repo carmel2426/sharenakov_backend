@@ -6,9 +6,10 @@ from helper import returns_json
 
 
 @app.post('/login')
+@returns_json
 def login():
-    name = request.form.get('name')
-    password = request.form.get('password')
+    name = request.json.get('name')
+    password = request.json.get('password')
     print(name)
     print(password)
     m = list(products_collection.find({'name': name, 'password': password}))
@@ -16,7 +17,7 @@ def login():
         return True
     if len(m)<0:
         return False
-    return m
+
 
 
 @app.post('/signUp')
@@ -36,11 +37,11 @@ def signUp():
 @app.post('/product')
 @returns_json
 def add_product_to_db():
-    radius = request.form.get('radius')
-    product = request.form.get('product')
-    description = request.form.get('description')
-    latitude = request.form.get('latitude')
-    longtitude = request.form.get('longtitude')
+    radius = request.json.get('radius')
+    product = request.json.get('product')
+    description = request.json.get('description')
+    latitude = request.json.get('latitude')
+    longtitude = request.json.get('longtitude')
     print(radius)
     print(product)
     print(description)
@@ -54,7 +55,8 @@ def add_product_to_db():
 @app.get('/product')
 @returns_json
 def get_product_from_db():
-    loc = [31.88, 34.88]
+    print(request.args)
+    loc = [float(request.args.get("longitude")), float(request.args.get("latitude"))]
     radius = 150000
     m = list(products_collection.find({"loc": {
         "$nearSphere": {

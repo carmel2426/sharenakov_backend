@@ -7,5 +7,5 @@ def new_user(name, password, ):
 
 
 def get_a_product(r, p, d, longtitude, latitude):
-    port = {"_id": ObjectId(), "radius": r, "product": p, "description": d, "loc": {"type": "Point", "coordinates": [longtitude, latitude]}}
+    port = {"_id": ObjectId(), "radius": r, "product": p, "description": d, "loc": {"type": "Point", "coordinates": [latitude, longtitude]}}
     return port
